@@ -330,7 +330,9 @@ function formatdate(date){
       var city={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江 ",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北 ",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏 ",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外 "};
       var tip = "";
       var pass= true;
-      
+      if(!code){
+		return { valid : true, msg : ''};
+	  }
       if(!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|[x|X])?$/i.test(code)){
           tip = "身份证号格式错误";
           pass = false;
@@ -386,18 +388,19 @@ function formatdate(date){
 	  if(!valid.valid){
 		  return "身份证号"+valid.msg;
 	  }
-	  
-	  FileNumSearch.checkFileByIdNumber($("#fileNo span").html(),idnumber,		{ 
-	        async: false,
-	        callback: function(data){
-	        	console.log(data);
-	        	if(data.length>0){
-	        		ret = "不允许录入重复的身份证号!身份证与以下档案重复:"
-	        		for(var i = 0 ; i <data.length;i++){
-	        			ret += "<br>姓名:"+denc(data[i][1])+"&nbsp;&nbsp;档案编号:"+denc(data[i][0]);
-	        		}
-	        	}	        }
-	  });
+	  if(idnumber){
+		  FileNumSearch.checkFileByIdNumber($("#fileNo span").html(),idnumber,		{ 
+				async: false,
+				callback: function(data){
+					console.log(data);
+					if(data.length>0){
+						ret = "不允许录入重复的身份证号!身份证与以下档案重复:"
+						for(var i = 0 ; i <data.length;i++){
+							ret += "<br>姓名:"+denc(data[i][1])+"&nbsp;&nbsp;档案编号:"+denc(data[i][0]);
+						}
+					}	        }
+		  });
+	  }
 	  return ret;
   }
 
@@ -550,7 +553,7 @@ function formatdate(date){
         calculateBirthdayByIDNumber: ["birthday"],
         checkfunc:window.checkidnumber
       },
-      required: [true, "身份证号"]
+      required: [false, "身份证号"]
     }, {
       id: "birthday",
       xtype: "input",

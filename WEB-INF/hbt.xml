@@ -34,9 +34,9 @@
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
 		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
-		<property name="url" value="jdbc:sqlserver://172.16.10.62:8433;databaseName=pmhs_km_zs" />       
-		<property name="username" value="kmwsj" />       
-		<property name="password" value="kmwsj2013" /> 
+		<property name="url" value="jdbc:sqlserver://hcsoft2014.sqlserver.rds.aliyuncs.com:3433;databaseName=fulinghealth" />       
+		<property name="username" value="hcsoft" />       
+		<property name="password" value="hcsoft2015" /> 
 		<property name="initialSize" value="1"/>
 		<property name="maxActive" value="1000"/>
 		<property name="minIdle" value="1"/>  

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 ">
-
 	
 	<bean id="securityService" class="cn.net.tongfang.framework.security.SecurityServiceImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
@@ -66,7 +63,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="apiId" ><value>test</value></property>
 		<property name="dbName" ><value>mas</value></property>
 	</bean>
-	<!--定时短信相关任务-->
+	<!--定时短信相关任务 -->
 	<bean id="SmsUtil"
 		class="cn.net.tongfang.framework.util.SmsUtil" scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactory"/>
@@ -76,7 +73,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="apiId" ><value>test</value></property>
 		<property name="dbName" ><value>mas</value></property>
 	</bean>
-	
+	<!--
 	<bean id="sendjobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 	  <property name="targetObject" ref="SmsService" />
 	  <property name="targetMethod" value="sendMsgJob" />
@@ -84,7 +81,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	
 	<bean id="sendSmsJob" class="org.springframework.scheduling.quartz.CronTriggerBean">
     	<property name="jobDetail" ref="sendjobDetail" />
-	    <!-- run every morning at 10 AM -->
 	    <property name="cronExpression" value="0 55 12 * * ?" />
 	</bean>
 	
@@ -95,9 +91,19 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	
 	<bean id="makeSmsjob" class="org.springframework.scheduling.quartz.CronTriggerBean">
     	<property name="jobDetail" ref="makejobDetail" />
-	    <!-- run every morning at 10 AM -->
 	    <property name="cronExpression" value="0 50 12 * * ?" />
 	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="triggers">
+	        <list>
+	            <ref bean="sendSmsJob" />
+	            <ref bean="makeSmsjob" />
+	        </list>
+	    </property>
+	</bean>
+	-->
+	<!--短信定时任务-->
 	
 	
 	<bean id="taskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -118,5 +124,4 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	        </list>
 	    </property>
 	</bean>
-	<!--短信定时任务-->
 </beans>
