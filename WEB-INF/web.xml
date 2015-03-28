@@ -18,6 +18,11 @@
 			/WEB-INF/app.xml
 		</param-value>
 	</context-param>
+	
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>fuling</param-value>
+	</context-param>
 
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
